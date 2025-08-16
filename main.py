@@ -138,12 +138,51 @@ class Inventario:
         if not  self.productos:
             print("No hay Productos aun")
             return
-        productoEliminar=input("Ingrese el Codigodel producto a eliminar: ")
-        if productoEliminar in self.productos:
-            del self.productos[productoEliminar]
-            print("Producto eliminado")
+
         else:
-            print("Estudiante No encontrado")
+            productoEliminar = input("Ingrese el Codigodel producto a eliminar: ")
+            if productoEliminar in self.productos:
+                while True:
+                    confir = input(f'¿Esta seguro que desea eliminar este producto {productoEliminar}? S/N   ')
+                    if confir.upper() == "S":
+                        del self.productos[productoEliminar]
+                        print("Producto eliminado")
+                        break
+                    elif confir.upper() == "N":
+                        print('Eliminacion cancelada')
+                        break
+                    else:
+                        print(f'La opcion {conf} no existe vuelve a intentarlo con S para si o N para no')
+            else:
+                print("Producto No encontrado")
+
+
+
+    def actualiza(self):
+        codigoActualizar=input("Ingrese l codigo a Actualizar")
+        if codigoActualizar in self.productos:
+            producto_a = self.productos[codigoActualizar]["Articulo"]
+            print("Si esta el Producto")
+
+            nuevoNombre=input("Ingrese el Nuevo Nombre: ")
+            nuevaCategoria=input("Ingrese la Nueva Categoria")
+            nuevoPrecio=int(input("Ingrese el nuevo Precio"))
+            nuevoStock=int(input("Ingrese el nuevo stock"))
+            if nuevoNombre:
+                producto_a.nombre=nuevoNombre
+            if nuevaCategoria:
+                producto_a.categoria=nuevaCategoria
+            if nuevoPrecio:
+                producto_a.precio=nuevoPrecio
+            if nuevoStock:
+                producto_a.stock=nuevoStock
+        else:
+            print("Producto No encontrado jaja")
+class Usuario:
+    def __init(self,nombreUsuario,contrasenia):
+        self.nombreUsuario=nombreUsuario
+        self.contrasenia=contrasenia
+
 
 fin_menu = True
 registro=Inventario()
@@ -151,7 +190,7 @@ while fin_menu:
     try:
         print('\t\t\t\t****Bienvenido usuario****')
         print('1.Ingreso de mercaderia\n2.Listado de productos \n3.Buscar producto')
-        print('4.Actualizar o eliminar producto\n5.Salir')
+        print('4.Actualizar \n5.eEliminar\n6.salir')
         opcion=int(input("Digite la opción a ingresar: "))
         match opcion:
             case 1:
@@ -161,8 +200,10 @@ while fin_menu:
             case 3:
                 registro.eliminar()
             case 4:
-                pass
+                registro.eliminar()
             case 5:
+                registro.actualiza()
+            case 6:
                 while True:
                     conf = input('¿Esta seguro que desea salir? S/N    ')
                     if conf.upper() == "S":
