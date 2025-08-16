@@ -1,3 +1,6 @@
+from wx.core import ADJUST_MINSIZE
+
+
 class Producto:
     #metodo constructor para la instancia de los objetos recibe
     def __init__(self,cod_producto,nombre,categoria,precio,stock):
@@ -178,14 +181,40 @@ class Inventario:
                 producto_a.stock=nuevoStock
         else:
             print("Producto No encontrado jaja")
-class Usuario:
-    def __init(self,nombreUsuario,contrasenia):
-        self.nombreUsuario=nombreUsuario
-        self.contrasenia=contrasenia
+class Administrador:
+    def __init__(self,user,password):
+        self.nombre=user
+        self.contra=password
 
 
+def validacion_admin(administradores):
+    intentos =0
+    while intentos<3:
+        try:
+            print(f'Esta accion requiere perfil de administrador...\nTienes {3-intentos} intentos')
+            nombre_tmp = input('Ingrese nombre de usuario: ')
+            contra_tmp = input('Ingrese la contraseña: ')
+            for ob in administradores:
+                if ob.nombre ==nombre_tmp:
+                    if ob.contra == contra_tmp:
+                        print('Bienvenido! permiso concedido')
+                        return True
+            print('Usuario o contraseña incorrecta por favor intente de nuevo')
+            intentos+=1
+
+        except Exception as e:
+            print('Error por favor ingrese un dato valido')
+    print('Intentos fallidos no tiene acceso a estas funciones')
+    return False
+
+
+admin1 = Administrador("Erick29", "Erick2000") #Administrador creado
+admin2 = Administrador("Darwin04", "TuCuate")  #Administrador creado
+administradores = [admin1, admin2] #lista de administradores
 fin_menu = True
 registro=Inventario()
+
+
 while fin_menu:
     try:
         print('\t\t\t\t****Bienvenido usuario****')
@@ -198,11 +227,13 @@ while fin_menu:
             case 2:
                 registro.mostrar()
             case 3:
-                registro.eliminar()
+                pass
             case 4:
-                registro.eliminar()
+                if validacion_admin(administradores):
+                    registro.actualiza()
             case 5:
-                registro.actualiza()
+                if validacion_admin(administradores):
+                    registro.eliminar()
             case 6:
                 while True:
                     conf = input('¿Esta seguro que desea salir? S/N    ')
