@@ -12,10 +12,10 @@ class Producto:
 
 class Ordenador:
 
+    #Este metodo sirve para ordenar datos desde un diccionario ya que recibe el diccionario hecho lista y su llave
     def quick_sort(self, lista, clave):
         if len(lista) <= 1:
             return lista
-
         pivote = lista[0]
         valor_pivote = pivote[clave]
         inicial = [x for x in lista[1:] if x[clave] < valor_pivote]
