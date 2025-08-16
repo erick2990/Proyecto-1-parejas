@@ -12,17 +12,16 @@ class Producto:
 
 class Ordenador:
 
-
-    def quick_sort(self, lista):
+    def quick_sort(self, lista, clave):
         if len(lista) <= 1:
             return lista
 
         pivote = lista[0]
-        inicial = [x for x in lista[1:] if x < pivote]
-        medio = [x for x in lista if x == pivote]
-        final = [x for x in lista[1:] if x > pivote]
-
-        return self.quick_sort(inicial) + medio + self.quick_sort(final)
+        valor_pivote = pivote[clave]
+        inicial = [x for x in lista[1:] if x[clave] < valor_pivote]
+        medio = [x for x in lista if x[clave] == valor_pivote]
+        final = [x for x in lista[1:] if x[clave] >= valor_pivote]
+        return self.quick_sort(inicial, clave) + medio + self.quick_sort(final, clave)
 
 
 #En esta clase se maneja toda la gestion de la tienda desde compras, control y existencias
@@ -97,9 +96,43 @@ class Inventario:
         if not self.productos:
             print("No hay Productos Aun")
             return
-        print("Listado")
-        for i, Producto in enumerate(self.productos.values(), start=1):
-            print(f"{i}. {Producto.Mostrar()}")
+        else:
+            ordenado = Ordenador()
+            #Se necesira listar los datos de los objetos para saber a que poder acceder
+            #Articulo se refiere al objeto que asi se llama el campo pero de el se regresan los atributos
+            productos_lista = [
+                {
+                    "codigo": codigo,
+                    "nombre": datos["Articulo"].nombre,
+                    "precio": datos["Articulo"].precio,
+                    "stock": datos["Articulo"].stock,
+                    "copia": datos["Articulo"] #Este es una copia original para que despues se pueda acceder a todos los metodos del mismo
+                }
+                for codigo, datos in self.productos.items()
+            ]
+            while True:
+                try:
+                    print('\n¿Como desea visualizar los datos? \n1.Ordenado por nombre\n2.Ordenado por precio\n3.Ordenado por stock')
+                    op = int(input('Digite la opcion que desea visualizar:  '))
+                    match op:
+                        case 1:
+                           ordenados_u = ordenado.quick_sort(productos_lista, "nombre")
+                        case 2:
+                           ordenados_u = ordenado.quick_sort(productos_lista, "precio")
+                        case 3:
+                            ordenados_u = ordenado.quick_sort(productos_lista, "stock")
+                        case _:
+                            print('La opcion no existe por favor volver a intentarlo')
+
+                    print('Productos ordenados')
+                    for tmp in ordenados_u:
+                        tmp["copia"].mostrar_producto()
+                    break    #Termina el while para ordenar los productos
+
+                except Exception as e:
+                    print(f'Por favor volver a intentar, ocurrio {e}')
+
+
 
     def eliminar(self):
         if not  self.productos:
