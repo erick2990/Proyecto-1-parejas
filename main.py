@@ -136,19 +136,19 @@ class Inventario:
                     print(f'Por favor volver a intentar, ocurrio {e}')
 
 
-
+    #metodo para eliminar articulos y a la vez validar y confirmar que el articulo que se borra es el correcto
     def eliminar(self):
         if not  self.productos:
             print("No hay Productos aun")
             return
 
         else:
-            productoEliminar = input("Ingrese el Codigodel producto a eliminar: ")
-            if productoEliminar in self.productos:
+            producto_eliminar = input("Ingrese el Codigodel producto a eliminar: ")
+            if producto_eliminar in self.productos:
                 while True:
-                    confir = input(f'¿Esta seguro que desea eliminar este producto {productoEliminar}? S/N   ')
+                    confir = input(f'¿Esta seguro que desea eliminar este producto {producto_eliminar}? S/N   ')
                     if confir.upper() == "S":
-                        del self.productos[productoEliminar]
+                        del self.productos[producto_eliminar]
                         print("Producto eliminado")
                         break
                     elif confir.upper() == "N":
@@ -159,28 +159,52 @@ class Inventario:
             else:
                 print("Producto No encontrado")
 
-
-
+    #Metodo para actualizar precio o stock de un articulo según su codigo
     def actualiza(self):
-        codigoActualizar=input("Ingrese l codigo a Actualizar")
-        if codigoActualizar in self.productos:
-            producto_a = self.productos[codigoActualizar]["Articulo"]
-            print("Si esta el Producto")
+        codigo_actualizar=input("Ingrese el codigo a Actualizar")
+        if codigo_actualizar in self.productos:
+            fin_update = True #Esta variable sirve para detener o cancelar la actualizacion del producto
+            while fin_update:
+                confi_u = input(f'¿Esta seguro que desea Actualizar el Producto Con el Codigo {codigo_actualizar}? S/N   ')
+                if confi_u.upper() == "S":
+                    producto_a = self.productos[codigo_actualizar]["Articulo"] #toma el valor del producto que coincide con ese codigo
+                    print("Si esta el Producto")
+                    while True:
+                        try:
+                            nuevo_precio = float(input("Ingrese el Nuevo Precio en Quetzales del Producto:     Q."))
+                            if nuevo_precio == "":
+                                print("Este campo no Puede quedar vacio, Ingrese el precio")
 
-            nuevoNombre=input("Ingrese el Nuevo Nombre: ")
-            nuevaCategoria=input("Ingrese la Nueva Categoria")
-            nuevoPrecio=int(input("Ingrese el nuevo Precio"))
-            nuevoStock=int(input("Ingrese el nuevo stock"))
-            if nuevoNombre:
-                producto_a.nombre=nuevoNombre
-            if nuevaCategoria:
-                producto_a.categoria=nuevaCategoria
-            if nuevoPrecio:
-                producto_a.precio=nuevoPrecio
-            if nuevoStock:
-                producto_a.stock=nuevoStock
+                            elif nuevo_precio < 0:
+                                print("El precio debe ser mayor a Q0 este no puede ser negativo ni igual a 0")
+                            elif nuevo_precio>0:
+                                producto_a.precio=nuevo_precio
+                                break
+                        except ValueError:
+                            print("Solo se permiten datos en Quetzales")
+
+                    while True:
+                        try:
+                            nuevo_stock = int(input("Ingrese cuantas unidades se tienen actualmente en stock:   "))
+                            if nuevo_stock < 0:
+                                print("Error, la cantidad en stock, no puede ser negativa")
+                            elif nuevo_stock:
+                                producto_a.stock=nuevo_stock
+                                print("Se actualizaron datos...")
+                                break
+                        except ValueError:
+                            print("No es permitido ingresar cantidades negativas")
+
+                elif confi_u.upper() == "N":
+                    print('Proceso de actualización cancelado')
+                    fin_update = False #Se cancela el metodo de actualizacion
+                else:
+                    print(f'La opcion {conf} no existe vuelve a intentarlo con S para si o N para no')
+
         else:
-            print("Producto No encontrado jaja")
+            print("Producto No encontrado ")
+
+
 class Administrador:
     def __init__(self,user,password):
         self.nombre=user
