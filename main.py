@@ -126,6 +126,7 @@ class Inventario:
                             ordenados_u = ordenado.quick_sort(productos_lista, "stock")
                         case _:
                             print('La opcion no existe por favor volver a intentarlo')
+                    print('\n')
 
                     print('Productos ordenados')
                     for tmp in ordenados_u:
@@ -224,6 +225,7 @@ def validacion_admin(administradores):
                         print('Bienvenido! permiso concedido')
                         return True
             print('Usuario o contraseña incorrecta por favor intente de nuevo')
+            print('\n')
             intentos+=1
 
         except Exception as e:
@@ -243,7 +245,7 @@ while fin_menu:
     try:
         print('\t\t\t\t****Bienvenido usuario****')
         print('1.Ingreso de mercaderia\n2.Listado de productos \n3.Buscar producto')
-        print('4.Actualizar \n5.eEliminar\n6.salir')
+        print('4.Actualizar \n5.Eliminar\n6.salir')
         opcion=int(input("Digite la opción a ingresar: "))
         match opcion:
             case 1:
