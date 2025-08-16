@@ -12,17 +12,51 @@ class RegistroProductos:
         self.productos={}
     def agregar(self):
         while True:
-            codigo=input("Ingrese El Codigo del Producto:   ")
+            codigo=input("Ingrese El Codigo del Producto:                  ")
             if codigo in self.productos:
-                print("Este Codigo Ya existe, Intentelo de nuevo...")
+                print("Este Codigo Ya existe, Intentelo de nuevo...        ")
             elif codigo=="":
-                print("El codigo no puede estar vacio, Intentelo de nuevo")
+                print("El codigo no puede estar vacio, Intentelo de nuevo  ")
             else:
                 break
-        nombre=input("Ingrese el Nombre del Producto:       ")
-        categoria=input("Ingrese La Categoria del Producto: ")
-        precio=float(input("Ingrese el Precio del Producto: "))
-        stock=int(input("Ingrese la cantidad en Stock:      "))
+        while True:
+            nombre=input("Ingrese el Nombre del Producto:               ")
+            if nombre in self.productos:
+                print("Este Nombre en especifico ya existe, ingrese otro:")
+            elif nombre=="":
+                print("Este Campo no puede quedar vacio, Ingrese el Dato")
+            else:
+                break
+        while True:
+            categoria=input("Ingrese La Categoria del Producto:         ")
+            if categoria=="":
+                print("Este campo no puede quedar vacio, Ingrese el Dato")
+            else:
+                break
+        while True:
+            try:
+                precio = float(input("Ingrese el Precio del Producto:   "))
+                if precio=="":
+                    print("Este campo no Puede quedar vacio, Ingrese el Dato")
+
+                elif precio<0:
+                    print("El precio debe ser mayor a 0")
+                else:
+                    break
+            except ValueError:
+                print("Solo se permiten cantidades")
+        while True:
+            try:
+              stock=int(input("Ingrese la cantidad en Stock:             "))
+              if stock=="":
+                  print("El stock no puede quedar,vacio Ingrese datos")
+              elif stock<0:
+                  print("Error, el cantidad en stock, no puede ser menor a 0")
+              else:
+                  break
+            except ValueError:
+                print("Solo se permiten enteros")
+
         self.productos[codigo]=Producto(codigo,nombre,categoria,precio,stock)
         print("El producto se Agrego Correctamente")
 
@@ -41,5 +75,5 @@ while True:
                 print("Incorrecto")
     except ValueError:
         print("Ingrese un numero entero: ")
-
 print('hola Darwin')
+print("Hola Erick")
