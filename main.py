@@ -7,6 +7,7 @@ class Producto:
         self.stock=stock
     def Mostrar(self):
         return f"Codigo: {self.codigoProducto} - Nombre: {self.nombre} - Categoria: {self.categoria} - Precio: {self.precio} - Stok: {self.stock}"
+
 class RegistroProductos:
     def __init__(self):
         self.productos={}
@@ -60,6 +61,25 @@ class RegistroProductos:
         self.productos[codigo]=Producto(codigo,nombre,categoria,precio,stock)
         print("El producto se Agrego Correctamente")
 
+    def mostrar(self):
+        if not self.productos:
+            print("No hay Productos Aun")
+            return
+        print("Listado")
+        for i, Producto in enumerate(self.productos.values(), start=1):
+            print(f"{i}. {Producto.Mostrar()}")
+
+    def eliminar(self):
+        if not  self.productos:
+            print("No hay Productos aun")
+            return
+        productoEliminar=input("Ingrese el Codigodel producto a eliminar: ")
+        if productoEliminar in self.productos:
+            del self.productos[productoEliminar]
+            print("Producto eliminado")
+        else:
+            print("Estudiante No encontrado")
+
 registro=RegistroProductos()
 while True:
     print("1. Agregar")
@@ -69,6 +89,12 @@ while True:
             case 1:
                 registro.agregar()
             case 2:
+                registro.mostrar()
+            case 3:
+                registro.eliminar()
+            case 4:
+                pass
+            case 5:
                 print("Salir")
                 break
             case _:
