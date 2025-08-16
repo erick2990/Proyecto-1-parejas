@@ -1,19 +1,21 @@
+from wx.core import ADJUST_MINSIZE
+
+
 class Producto:
-    # metodo constructor para la instancia de los objetos recibe
-    def __init__(self, cod_producto, nombre, categoria, precio, stock):
-        self.Cod_producto = cod_producto
-        self.nombre = nombre
-        self.categoria = categoria
-        self.precio = precio
-        self.stock = stock
-
+    #metodo constructor para la instancia de los objetos recibe
+    def __init__(self,cod_producto,nombre,categoria,precio,stock):
+        self.Cod_producto=cod_producto
+        self.nombre=nombre
+        self.categoria=categoria
+        self.precio=precio
+        self.stock=stock
+    #metodo para presentar los datos del objeto
     def mostrar_producto(self):
-        print(
-            f'Codigo: {self.Cod_producto}  |  Nombre: {self.nombre}  |  Categoria: {self.categoria}  |  Precio: {self.precio}  |  Stok: {self.stock}')
-
+        print(f'Codigo: {self.Cod_producto} Nombre: {self.nombre} Categoria: {self.categoria} Precio: {self.precio} Stok: {self.stock}')
 
 class Ordenador:
 
+    #Este metodo sirve para ordenar datos desde un diccionario ya que recibe el diccionario hecho lista y su llave
     def quick_sort(self, lista, clave):
         if len(lista) <= 1:
             return lista
@@ -25,43 +27,28 @@ class Ordenador:
         return self.quick_sort(inicial, clave) + medio + self.quick_sort(final, clave)
 
 
-# class Buscador:
-
-
-# def busqueda_secuencial(self, lista, objetivo):
-#   for i in range(len(lista)):  # Recorrer la lista
-#        if lista[i] == objetivo:  # Comparar elemento actual con el objetivo
-#            return i  # Retornar índice si lo encuentra
-#   return -1
-class Buscador:
-    def busqueda_secuencial(selfl, lista, clave, valor):
-        resultados = []
-        for item in lista:
-            if item[clave].lower() == valor.lower():
-                resultados.append(item)
-        return resultados
-
-
+#En esta clase se maneja toda la gestion de la tienda desde compras, control y existencias
 class Inventario:
     def __init__(self):
-        self.productos = {}
+        self.productos={}
+
 
     def ingreso_producto(self):
         while True:
             try:
                 cantidad_productos = int(input('¿Cuantos productos desea ingresar al inventario?:     '))
                 for i in range(cantidad_productos):
-                    print(f'\t\t\t\tIngreso datos de {i + 1} producto: ')
+                    print(f'\t\t\t\tIngreso datos de {i+1} producto: ')
                     while True:
-                        codigo = input("Ingrese el codigo del Producto:           ")
+                        codigo = input("Ingrese el codigo del Producto:     ")
                         if codigo in self.productos:
-                            print("Este Codigo Ya existe, Intentelo de nuevo...")
+                            print("Este Codigo Ya existe, Intentelo de nuevo...        ")
                         elif codigo == "":
                             print("El codigo no puede estar vacio, Intentelo de nuevo... ")
                         else:
                             break
                     while True:
-                        nombre = input("Ingrese el Nombre del Producto:           ")
+                        nombre = input("Ingrese el Nombre del Producto:       ")
                         if nombre in self.productos:  # Validacion por nombre check
                             print("Este Nombre en especifico ya existe, ingrese otro:")
                         elif nombre == "":
@@ -69,7 +56,7 @@ class Inventario:
                         else:
                             break
                     while True:
-                        categoria = input("Ingrese La Categoria del Producto:        ")
+                        categoria = input("Ingrese La Categoria del Producto:     ")
                         if categoria == "":
                             print("Este campo no puede quedar vacio, Ingrese la categoria")
                         else:
@@ -88,7 +75,7 @@ class Inventario:
                             print("Solo se permiten cantidades")
                     while True:
                         try:
-                            stock = int(input("Ingrese la cantidad en Stock:               "))
+                            stock = int(input("Ingrese la cantidad en Stock:      "))
                             if stock < 0:
                                 print("Error, la cantidad en stock, no puede ser negativa")
                             else:
@@ -103,9 +90,10 @@ class Inventario:
                     }
                     print(f'El producto con codigo {codigo} se Agrego Correctamente')
                     print('\n')
-                break  # Termina el break principal porque este bloque se ejecuto bien
+                break #Termina el break principal porque este bloque se ejecuto bien
             except Exception as e:
                 print(f'Por favor ingrese datos validos, ocurrio {e}')
+
 
     def mostrar(self):
         if not self.productos:
@@ -113,29 +101,27 @@ class Inventario:
             return
         else:
             ordenado = Ordenador()
-            # Se necesira listar los datos de los objetos para saber a que poder acceder
-            # Articulo se refiere al objeto que asi se llama el campo pero de el se regresan los atributos
+            #Se necesira listar los datos de los objetos para saber a que poder acceder
+            #Articulo se refiere al objeto que asi se llama el campo pero de el se regresan los atributos
             productos_lista = [
                 {
                     "codigo": codigo,
                     "nombre": datos["Articulo"].nombre,
                     "precio": datos["Articulo"].precio,
                     "stock": datos["Articulo"].stock,
-                    "copia": datos["Articulo"]
-                    # Este es una copia original para que despues se pueda acceder a todos los metodos del mismo
+                    "copia": datos["Articulo"] #Este es una copia original para que despues se pueda acceder a todos los metodos del mismo
                 }
                 for codigo, datos in self.productos.items()
             ]
             while True:
                 try:
-                    print(
-                        '\n¿Como desea visualizar los datos? \n1.Ordenado por nombre\n2.Ordenado por precio\n3.Ordenado por stock')
+                    print('\n¿Como desea visualizar los datos? \n1.Ordenado por nombre\n2.Ordenado por precio\n3.Ordenado por stock')
                     op = int(input('Digite la opcion que desea visualizar:  '))
                     match op:
                         case 1:
-                            ordenados_u = ordenado.quick_sort(productos_lista, "nombre")
+                           ordenados_u = ordenado.quick_sort(productos_lista, "nombre")
                         case 2:
-                            ordenados_u = ordenado.quick_sort(productos_lista, "precio")
+                           ordenados_u = ordenado.quick_sort(productos_lista, "precio")
                         case 3:
                             ordenados_u = ordenado.quick_sort(productos_lista, "stock")
                         case _:
@@ -145,14 +131,15 @@ class Inventario:
                     print('Productos ordenados')
                     for tmp in ordenados_u:
                         tmp["copia"].mostrar_producto()
-                    break  # Termina el while para ordenar los productos
+                    break    #Termina el while para ordenar los productos
 
                 except Exception as e:
                     print(f'Por favor volver a intentar, ocurrio {e}')
 
-    # metodo para eliminar articulos y a la vez validar y confirmar que el articulo que se borra es el correcto
+
+    #metodo para eliminar articulos y a la vez validar y confirmar que el articulo que se borra es el correcto
     def eliminar(self):
-        if not self.productos:
+        if not  self.productos:
             print("No hay Productos aun")
             return
 
@@ -173,17 +160,15 @@ class Inventario:
             else:
                 print("Producto No encontrado")
 
-    # Metodo para actualizar precio o stock de un articulo según su codigo
+    #Metodo para actualizar precio o stock de un articulo según su codigo
     def actualiza(self):
-        codigo_actualizar = input("Ingrese el codigo a Actualizar")
+        codigo_actualizar=input("Ingrese el codigo a Actualizar")
         if codigo_actualizar in self.productos:
-            fin_update = True  # Esta variable sirve para detener o cancelar la actualizacion del producto
+            fin_update = True #Esta variable sirve para detener o cancelar la actualizacion del producto
             while fin_update:
-                confi_u = input(
-                    f'¿Esta seguro que desea Actualizar el Producto Con el Codigo {codigo_actualizar}? S/N   ')
+                confi_u = input(f'¿Esta seguro que desea Actualizar el Producto Con el Codigo {codigo_actualizar}? S/N   ')
                 if confi_u.upper() == "S":
-                    producto_a = self.productos[codigo_actualizar][
-                        "Articulo"]  # toma el valor del producto que coincide con ese codigo
+                    producto_a = self.productos[codigo_actualizar]["Articulo"] #toma el valor del producto que coincide con ese codigo
                     print("Si esta el Producto")
                     while True:
                         try:
@@ -193,8 +178,8 @@ class Inventario:
 
                             elif nuevo_precio < 0:
                                 print("El precio debe ser mayor a Q0 este no puede ser negativo ni igual a 0")
-                            elif nuevo_precio > 0:
-                                producto_a.precio = nuevo_precio
+                            elif nuevo_precio>0:
+                                producto_a.precio=nuevo_precio
                                 break
                         except ValueError:
                             print("Solo se permiten datos en Quetzales")
@@ -205,7 +190,7 @@ class Inventario:
                             if nuevo_stock < 0:
                                 print("Error, la cantidad en stock, no puede ser negativa")
                             elif nuevo_stock:
-                                producto_a.stock = nuevo_stock
+                                producto_a.stock=nuevo_stock
                                 print("Se actualizaron datos...")
                                 break
                         except ValueError:
@@ -213,126 +198,66 @@ class Inventario:
 
                 elif confi_u.upper() == "N":
                     print('Proceso de actualización cancelado')
-                    fin_update = False  # Se cancela el metodo de actualizacion
+                    fin_update = False #Se cancela el metodo de actualizacion
                 else:
                     print(f'La opcion {conf} no existe vuelve a intentarlo con S para si o N para no')
 
         else:
             print("Producto No encontrado ")
 
-    # Dinamica de busqueda secuencial según los datos del objeto lineas 219 hasta 264
-    def buscar(self):
-        if not self.productos:
-            print('No hay productos registrados aún')
-        else:
-            lista_busqueda = Buscador()  # Esta lista se llena segun los datos que se envian
-            fin_busqueda = True  # Si se desea terminar la busqueda esto cambiara
-
-            productos_lista = [
-                {
-                    "codigo": codigo,
-                    "nombre": datos["Articulo"].nombre,
-                    "precio": datos["Articulo"].precio,
-                    "categoria": datos["Articulo"].categoria,
-                    "stock": datos["Articulo"].stock,
-                    "copia": datos["Articulo"]
-                    # Este es una copia original para que despues se pueda acceder a todos los metodos del mismo
-                }
-                for codigo, datos in self.productos.items()
-            ]
-
-            while fin_busqueda:
-                print('\t\t\tBienvenido a realizar busqueda: ')
-                print('1.Codigo \n2.Nombre \n3.Categoria \n4.Regresar')
-                op_e = int(input('Ingrese la opción que desea ingresar: '))
-                resultado_lista=[]
-                match op_e:
-                    case 1:
-                        codigo_buscar = input("Ingrese el Codigo a Buscar: ")
-                        resultado_lista = lista_busqueda.busqueda_secuencial(productos_lista, "codigo", codigo_buscar)
-                        break
-                    case 2:
-                        nombre_buscar = input("Ingrese el nombre a buscar")
-                        resultado_lista = lista_busqueda.busqueda_secuencial(productos_lista, "nombre", nombre_buscar)
-                        break
-                    case 3:
-                        categoria_buscar = input("Ingrese la Categoria busacar: ")
-                        resultado_lista = lista_busqueda.busqueda_secuencial(productos_lista, "categoria",categoria_buscar)
-                        break
-                    case 4:
-                        print('Regresando al menú principal')
-                        fin_busqueda = False
-                    case _:
-                        print('Opcion incorrecta por favor vuelva a intentarlo')
-
-            print("El producto si esta disponible")
-            for tmp in resultado_lista:
-                tmp["copia"].mostrar_producto()
-
 
 class Administrador:
-    def __init__(self, user, password):
-        self.nombre = user
-        self.contra = password
+    def __init__(self,user,password):
+        self.nombre=user
+        self.contra=password
 
 
 def validacion_admin(administradores):
-    intentos = 0
-    while intentos < 3:
+    intentos =0
+    while intentos<3:
         try:
-            print(f'Esta accion requiere perfil de administrador...\nTienes {3 - intentos} intentos')
+            print(f'Esta accion requiere perfil de administrador...\nTienes {3-intentos} intentos')
             nombre_tmp = input('Ingrese nombre de usuario: ')
             contra_tmp = input('Ingrese la contraseña: ')
             for ob in administradores:
-                if ob.nombre == nombre_tmp:
+                if ob.nombre ==nombre_tmp:
                     if ob.contra == contra_tmp:
                         print('Bienvenido! permiso concedido')
                         return True
             print('Usuario o contraseña incorrecta por favor intente de nuevo')
             print('\n')
-            intentos += 1
+            intentos+=1
 
         except Exception as e:
             print('Error por favor ingrese un dato valido')
     print('Intentos fallidos no tiene acceso a estas funciones')
     return False
-import time
-def barrita_carga():
-    print("Cargando...Por Favor Espere un Momento")
-    for i in range(5):
-        time.sleep(0.5)
-        print("//",end="")
-    print("\nListo...")
 
 
-admin1 = Administrador("Erick29", "Erick2000")  # Administrador creado
-admin2 = Administrador("Darwin04", "Darwin123")  # Administrador creado
-administradores = [admin1, admin2]  # lista de administradores
+admin1 = Administrador("Erick29", "Erick2000") #Administrador creado
+admin2 = Administrador("Darwin04", "TuCuate")  #Administrador creado
+administradores = [admin1, admin2] #lista de administradores
 fin_menu = True
-registro = Inventario()
+registro=Inventario()
+
 
 while fin_menu:
     try:
         print('\t\t\t\t****Bienvenido usuario****')
         print('1.Ingreso de mercaderia\n2.Listado de productos \n3.Buscar producto')
         print('4.Actualizar \n5.Eliminar\n6.salir')
-        opcion = int(input("Digite la opción a ingresar: "))
+        opcion=int(input("Digite la opción a ingresar: "))
         match opcion:
             case 1:
-                barrita_carga()
                 registro.ingreso_producto()
             case 2:
-                barrita_carga()
                 registro.mostrar()
             case 3:
-                barrita_carga()
-                registro.buscar()
+                pass
             case 4:
-                barrita_carga()
                 if validacion_admin(administradores):
                     registro.actualiza()
             case 5:
-                barrita_carga()
                 if validacion_admin(administradores):
                     registro.eliminar()
             case 6:
