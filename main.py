@@ -1,3 +1,4 @@
+from cloudinit.sources.DataSourceAzure import find_busdev_from_disk
 from wx.core import ADJUST_MINSIZE
 
 
@@ -25,6 +26,16 @@ class Ordenador:
         medio = [x for x in lista if x[clave] == valor_pivote]
         final = [x for x in lista[1:] if x[clave] >= valor_pivote]
         return self.quick_sort(inicial, clave) + medio + self.quick_sort(final, clave)
+
+class Buscador:
+
+
+    def busqueda_secuencial(self, lista, objetivo):
+        for i in range(len(lista)):  # Recorrer la lista
+            if lista[i] == objetivo:  # Comparar elemento actual con el objetivo
+                return i  # Retornar índice si lo encuentra
+
+        return -1
 
 
 #En esta clase se maneja toda la gestion de la tienda desde compras, control y existencias
@@ -204,6 +215,53 @@ class Inventario:
 
         else:
             print("Producto No encontrado ")
+
+#Dinamica de busqueda secuencial según los datos del objeto lineas 219 hasta 264
+    def buscar(self):
+        if not self.productos:
+            print('No hay productos registrados aún')
+        else:
+            lista_busqueda = Buscador() #Esta lista se llena segun los datos que se envian
+            fin_busqueda = True #Si se desea terminar la busqueda esto cambiara
+
+            productos_lista = [
+                {
+                    "codigo": codigo,
+                    "nombre": datos["Articulo"].nombre,
+                    "precio": datos["Articulo"].precio,
+                    "categoria" : datos["Articulo"].categoria,
+                    "stock": datos["Articulo"].stock,
+                    "copia": datos["Articulo"]
+                    # Este es una copia original para que despues se pueda acceder a todos los metodos del mismo
+                }
+                for codigo, datos in self.productos.items()
+            ]
+
+            while fin_busqueda:
+                print('\t\t\tBienvenido a realizar busqueda: ')
+                print('1.Codigo \n2.Nombre \n3.Categoria \n4.Regresar')
+                op_e = int(input('Ingrese la opción que desea ingresar: '))
+                match op_e:
+                    case 1:
+                        lista_busqueda.busqueda_secuencial(productos_lista, "codigo")
+                        break
+                    case 2:
+                        lista_busqueda.busqueda_secuencial(productos_lista, "nombre")
+                        break
+                    case 3:
+                        lista_busqueda.busqueda_secuencial(productos_lista, "categoria")
+                        break
+                    case 4:
+                        print('Regresando al menú principal')
+                        fin_busqueda = False
+                    case _ :
+                        print('Opcion incorrecta por favor vuelva a intentarlo')
+
+
+            for tmp in lista_busqueda:
+                tmp["copia"].mostrar_producto()
+
+
 
 
 class Administrador:
