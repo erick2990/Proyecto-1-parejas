@@ -161,7 +161,7 @@ class Inventario:
     def actualiza(self):
         codigoActualizar=input("Ingrese l codigo a Actualizar")
         if codigoActualizar in self.productos:
-            Producto = self.productos[codigoActualizar]["Articulo"]
+            producto_a = self.productos[codigoActualizar]["Articulo"]
             print("Si esta el Producto")
 
             nuevoNombre=input("Ingrese el Nuevo Nombre: ")
@@ -169,13 +169,13 @@ class Inventario:
             nuevoPrecio=int(input("Ingrese el nuevo Precio"))
             nuevoStock=int(input("Ingrese el nuevo stock"))
             if nuevoNombre:
-                Producto.nombre=nuevoNombre
+                producto_a.nombre=nuevoNombre
             if nuevaCategoria:
-                Producto.categoria=nuevaCategoria
+                producto_a.categoria=nuevaCategoria
             if nuevoPrecio:
-                Producto.precio=nuevoPrecio
+                producto_a.precio=nuevoPrecio
             if nuevoStock:
-                Producto.stock=nuevoStock
+                producto_a.stock=nuevoStock
         else:
             print("Producto No encontrado jaja")
 class Usuario:
