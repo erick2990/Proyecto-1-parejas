@@ -143,7 +143,7 @@ class Inventario:
             productoEliminar = input("Ingrese el Codigodel producto a eliminar: ")
             if productoEliminar in self.productos:
                 while True:
-                    confir = input(f'¿Esta seguro que desea eliminar este producto {productoEliminar}   ')
+                    confir = input(f'¿Esta seguro que desea eliminar este producto {productoEliminar}? S/N   ')
                     if confir.upper() == "S":
                         del self.productos[productoEliminar]
                         print("Producto eliminado")
