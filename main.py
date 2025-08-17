@@ -311,7 +311,7 @@ while fin_menu:
             case 2:
                 registro.mostrar()
             case 3:
-                pass
+                registro.buscar()
             case 4:
                 if validacion_admin(administradores):
                     registro.actualiza()
