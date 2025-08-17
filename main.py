@@ -138,12 +138,17 @@ class Inventario:
         if not  self.productos:
             print("No hay Productos aun")
             return
-        productoEliminar=input("Ingrese el Codigodel producto a eliminar: ")
-        if productoEliminar in self.productos:
-            del self.productos[productoEliminar]
-            print("Producto eliminado")
+
         else:
-            print("Producto No encontrado")
+            productoEliminar = input("Ingrese el Codigodel producto a eliminar: ")
+            if productoEliminar in self.productos:
+                del self.productos[productoEliminar]
+                print("Producto eliminado")
+            else:
+                print("Producto No encontrado")
+
+
+
     def actualiza(self):
         codigoActualizar=input("Ingrese l codigo a Actualizar")
         if codigoActualizar in self.productos:
