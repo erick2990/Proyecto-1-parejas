@@ -156,28 +156,47 @@ class Inventario:
             else:
                 print("Producto No encontrado")
 
-
-
     def actualiza(self):
-        codigoActualizar=input("Ingrese l codigo a Actualizar")
+        codigoActualizar=input("Ingrese el codigo a Actualizar")
         if codigoActualizar in self.productos:
-            producto_a = self.productos[codigoActualizar]["Articulo"]
-            print("Si esta el Producto")
+            while True:
+                confir = input(f'¿Esta seguro que desea Actualizar el Producto Con el Codigo {codigoActualizar}? S/N   ')
+                if confir.upper() == "S":
+                    producto_a = self.productos[codigoActualizar]["Articulo"]
+                    print("Si esta el Producto")
+                    while True:
+                        try:
+                            nuevoprecio = float(input("Ingrese el Nuevo Precio en Quetzales del Producto:     Q."))
+                            if nuevoprecio == "":
+                                print("Este campo no Puede quedar vacio, Ingrese el precio")
 
-            nuevoNombre=input("Ingrese el Nuevo Nombre: ")
-            nuevaCategoria=input("Ingrese la Nueva Categoria")
-            nuevoPrecio=int(input("Ingrese el nuevo Precio"))
-            nuevoStock=int(input("Ingrese el nuevo stock"))
-            if nuevoNombre:
-                producto_a.nombre=nuevoNombre
-            if nuevaCategoria:
-                producto_a.categoria=nuevaCategoria
-            if nuevoPrecio:
-                producto_a.precio=nuevoPrecio
-            if nuevoStock:
-                producto_a.stock=nuevoStock
+                            elif nuevoprecio < 0:
+                                print("El precio debe ser mayor a Q0 este no puede ser negativo ni igual a 0")
+                            elif nuevoprecio:
+                                producto_a.precio=nuevoprecio
+                                break
+                        except ValueError:
+                            print("Solo se permiten cantidades")
+
+                    while True:
+                        try:
+                            nuevostock = int(input("Ingrese la nueva cantidad en Stock:      "))
+                            if nuevostock < 0:
+                                print("Error, la cantidad en stock, no puede ser negativa")
+                            elif nuevostock:
+                                producto_a.stock=nuevostock
+                                print("Se actualizaron datos...")
+                                break
+                        except ValueError:
+                            print("Solo se permiten enteros")
+                elif confir.upper() == "N":
+                    print('Eliminacion cancelada')
+                    break
+                else:
+                    print(f'La opcion {conf} no existe vuelve a intentarlo con S para si o N para no')
+
         else:
-            print("Producto No encontrado jaja")
+            print("Producto No encontrado ")
 class Usuario:
     def __init(self,nombreUsuario,contrasenia):
         self.nombreUsuario=nombreUsuario
@@ -190,7 +209,7 @@ while fin_menu:
     try:
         print('\t\t\t\t****Bienvenido usuario****')
         print('1.Ingreso de mercaderia\n2.Listado de productos \n3.Buscar producto')
-        print('4.Actualizar \n5.eEliminar\n6.salir')
+        print('4.Eliminar \n5.Actualizr\n6.salir')
         opcion=int(input("Digite la opción a ingresar: "))
         match opcion:
             case 1:
