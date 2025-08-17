@@ -142,8 +142,17 @@ class Inventario:
         else:
             productoEliminar = input("Ingrese el Codigodel producto a eliminar: ")
             if productoEliminar in self.productos:
-                del self.productos[productoEliminar]
-                print("Producto eliminado")
+                while True:
+                    confir = input(f'¿Esta seguro que desea eliminar este producto {productoEliminar}   ')
+                    if confir.upper() == "S":
+                        del self.productos[productoEliminar]
+                        print("Producto eliminado")
+                        break
+                    elif confir.upper() == "N":
+                        print('Eliminacion cancelada')
+                        break
+                    else:
+                        print(f'La opcion {conf} no existe vuelve a intentarlo con S para si o N para no')
             else:
                 print("Producto No encontrado")
 
