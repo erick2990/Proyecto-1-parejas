@@ -31,7 +31,7 @@ class Ordenador:
 # class Buscador:
 
 class Buscador:
-    def busqueda_secuencial(selfl, lista, clave, valor):
+    def busqueda_secuencial(self, lista, clave, valor):
         resultados = []
         for item in lista:
             if item[clave].lower() == valor.lower():
@@ -112,6 +112,7 @@ class Inventario:
             ordenado = Ordenador()
             # Se necesira listar los datos de los objetos para saber a que poder acceder
             # Articulo se refiere al objeto que asi se llama el campo pero de el se regresan los atributos
+            #Esto es una lista por comprension que tendra una variable temporal y a la vez va a iterar com el for apra llenarse
             productos_lista = [
                 {
                     "codigo": codigo,
