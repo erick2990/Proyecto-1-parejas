@@ -24,15 +24,6 @@ class Ordenador:
         final = [x for x in lista[1:] if x[clave] >= valor_pivote]
         return self.quick_sort(inicial, clave) + medio + self.quick_sort(final, clave)
 
-
-# class Buscador:
-
-
-# def busqueda_secuencial(self, lista, objetivo):
-#   for i in range(len(lista)):  # Recorrer la lista
-#        if lista[i] == objetivo:  # Comparar elemento actual con el objetivo
-#            return i  # Retornar índice si lo encuentra
-#   return -1
 class Buscador:
     def busqueda_secuencial(selfl, lista, clave, valor):
         resultados = []
