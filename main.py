@@ -9,7 +9,7 @@ class Producto:
 
     def mostrar_producto(self):
         print(
-            f'Codigo: {self.Cod_producto} Nombre: {self.nombre} Categoria: {self.categoria} Precio: {self.precio} Stok: {self.stock}')
+            f'Codigo: {self.Cod_producto}  |  Nombre: {self.nombre}  |  Categoria: {self.categoria}  |  Precio: {self.precio}  |  Stok: {self.stock}')
 
 
 class Ordenador:
@@ -55,7 +55,7 @@ class Inventario:
                     while True:
                         codigo = input("Ingrese el codigo del Producto:           ")
                         if codigo in self.productos:
-                            print("Este Codigo Ya existe, Intentelo de nuevo...        ")
+                            print("Este Codigo Ya existe, Intentelo de nuevo...")
                         elif codigo == "":
                             print("El codigo no puede estar vacio, Intentelo de nuevo... ")
                         else:
@@ -88,7 +88,7 @@ class Inventario:
                             print("Solo se permiten cantidades")
                     while True:
                         try:
-                            stock = int(input("Ingrese la cantidad en Stock:                 "))
+                            stock = int(input("Ingrese la cantidad en Stock:               "))
                             if stock < 0:
                                 print("Error, la cantidad en stock, no puede ser negativa")
                             else:
@@ -245,7 +245,7 @@ class Inventario:
                 print('\t\t\tBienvenido a realizar busqueda: ')
                 print('1.Codigo \n2.Nombre \n3.Categoria \n4.Regresar')
                 op_e = int(input('Ingrese la opción que desea ingresar: '))
-                resultados_lista=[]
+                resultado_lista=[]
                 match op_e:
                     case 1:
                         codigo_buscar = input("Ingrese el Codigo a Buscar: ")
@@ -257,8 +257,7 @@ class Inventario:
                         break
                     case 3:
                         categoria_buscar = input("Ingrese la Categoria busacar: ")
-                        resultado_lista = lista_busqueda.busqueda_secuencial(productos_lista, "categoria",
-                                                                             categoria_buscar)
+                        resultado_lista = lista_busqueda.busqueda_secuencial(productos_lista, "categoria",categoria_buscar)
                         break
                     case 4:
                         print('Regresando al menú principal')
@@ -297,6 +296,13 @@ def validacion_admin(administradores):
             print('Error por favor ingrese un dato valido')
     print('Intentos fallidos no tiene acceso a estas funciones')
     return False
+import time
+def barrita_carga():
+    print("Cargando...Por Favor Espere un Momento")
+    for i in range(5):
+        time.sleep(0.5)
+        print("//",end="")
+    print("\nListo...")
 
 
 admin1 = Administrador("Erick29", "Erick2000")  # Administrador creado
@@ -313,15 +319,20 @@ while fin_menu:
         opcion = int(input("Digite la opción a ingresar: "))
         match opcion:
             case 1:
+                barrita_carga()
                 registro.ingreso_producto()
             case 2:
+                barrita_carga()
                 registro.mostrar()
             case 3:
+                barrita_carga()
                 registro.buscar()
             case 4:
+                barrita_carga()
                 if validacion_admin(administradores):
                     registro.actualiza()
             case 5:
+                barrita_carga()
                 if validacion_admin(administradores):
                     registro.eliminar()
             case 6:
